@@ -51,6 +51,21 @@ function App() {
     ))
   }
 
+  function handleUpdateToy(id, update){
+    fetch('http://localhost:3001/toys/'+id, {
+      method: "PATCH",
+      headers: {"Content-type": "application/json"},
+      body: JSON.stringify(update)
+    })
+    .then(r => r.json())
+    .then(updatedToy => setToys(
+      toys.map(toy =>
+        updatedToy.id === toy.id ? updatedToy : toy
+        )
+      )
+    )
+  }
+
   return (
     <>
       <Header />
@@ -61,6 +76,7 @@ function App() {
       <ToyContainer
         toys={toys}  
         onDeleteToy={handleDeleteToy} 
+        onUpdateToy={handleUpdateToy}
       />
     </>
   );
