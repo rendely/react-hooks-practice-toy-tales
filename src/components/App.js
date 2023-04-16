@@ -41,6 +41,16 @@ function App() {
     .then(newlyAddedToy => setToys([...toys, newlyAddedToy]))
   }
 
+  function handleDeleteToy(id){
+    fetch('http://localhost:3001/toys/'+id, {
+      method: "DELETE"
+    })
+    .then(r => r.json())
+    .then(() => setToys(
+      toys.filter(toy => toy.id !== id)
+    ))
+  }
+
   return (
     <>
       <Header />
@@ -49,7 +59,8 @@ function App() {
         <button onClick={handleShowFormClick}>Add a Toy</button>
       </div>
       <ToyContainer
-        toys={toys}   
+        toys={toys}  
+        onDeleteToy={handleDeleteToy} 
       />
     </>
   );
